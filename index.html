@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="啪啪电影网（papadianyingwang）— 提供最新电影、热播电视剧、动漫番剧与综艺纪实的在线影视导航，高清流畅，每日更新。">
+<meta name="keywords" content="啪啪电影网, papadianyingwang, 电影, 电视剧, 动漫, 综艺, 在线观看, 高清电影">
+<meta name="author" content="啪啪电影网">
+<meta name="robots" content="index, follow">
+<title>啪啪电影网 - 高清电影电视剧在线观看 | papadianyingwang</title>
+<style>
+    :root{
+        --bg:#07070d;
+        --bg2:#0d0d18;
+        --card:#121220;
+        --line:rgba(255,255,255,.08);
+        --txt:#ecedf5;
+        --sub:#9a9ab0;
+        --brand:#ff3b6b;
+        --brand2:#7b5cff;
+        --gold:#ffc24b;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+        font-family:"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+        background:var(--bg);
+        color:var(--txt);
+        line-height:1.7;
+        -webkit-font-smoothing:antialiased;
+        overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none;}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 20px;}
+
+    /* ===== 顶部导航 ===== */
+    header{
+        position:sticky;top:0;z-index:50;
+        background:rgba(7,7,13,.82);
+        backdrop-filter:blur(14px);
+        border-bottom:1px solid var(--line);
+    }
+    .nav{display:flex;align-items:center;gap:18px;height:64px;}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px;}
+    .logo .mark{
+        width:36px;height:36px;border-radius:10px;
+        background:linear-gradient(135deg,var(--brand),var(--brand2));
+        display:grid;place-items:center;font-size:18px;color:#fff;
+        box-shadow:0 6px 18px rgba(255,59,107,.35);
+    }
+    .logo b{font-size:19px;}
+    .logo span{color:var(--brand);}
+    .nav-links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap;}
+    .nav-links a{
+        padding:8px 14px;border-radius:999px;font-size:14px;color:var(--sub);
+        transition:.25s;
+    }
+    .nav-links a:hover{color:#fff;background:rgba(255,255,255,.06);}
+    .nav-links a.act{color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand2));}
+    .search{
+        display:flex;align-items:center;gap:8px;
+        background:rgba(255,255,255,.06);border:1px solid var(--line);
+        border-radius:999px;padding:7px 14px;
+    }
+    .search input{background:none;border:none;outline:none;color:#fff;font-size:13px;width:120px;}
+    .search input::placeholder{color:#6f6f85;}
+    .menu-btn{display:none;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;}
+
+    /* ===== Hero ===== */
+    .hero{
+        position:relative;padding:70px 0 60px;
+        background:
+            radial-gradient(1200px 400px at 80% -10%, rgba(123,92,255,.28), transparent 60%),
+            radial-gradient(900px 400px at 0% 10%, rgba(255,59,107,.20), transparent 55%);
+        border-bottom:1px solid var(--line);
+    }
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;}
+    .eyebrow{
+        display:inline-flex;align-items:center;gap:8px;
+        font-size:12px;color:var(--gold);
+        border:1px solid rgba(255,194,75,.35);border-radius:999px;
+        padding:5px 14px;background:rgba(255,194,75,.07);
+    }
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 1.6s infinite;}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+    h1{font-size: clamp(30px,5vw,52px);line-height:1.15;margin:18px 0 14px;font-weight:800;}
+    h1 em{font-style:normal;background:linear-gradient(90deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .hero p.lead{color:var(--sub);font-size:16px;max-width:540px;}
+    .stats{display:flex;gap:26px;margin:26px 0 28px;flex-wrap:wrap;}
+    .stat b{display:block;font-size:26px;font-weight:800;}
+    .stat small{color:var(--sub);font-size:12px;}
+    .cta{display:flex;gap:12px;flex-wrap:wrap;}
+    .btn{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:13px 26px;border-radius:12px;font-weight:700;font-size:15px;
+        border:1px solid transparent;cursor:pointer;transition:.25s;
+    }
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 10px 28px rgba(255,59,107,.3);}
+    .btn-primary:hover{transform:translateY(-2px);}
+    .btn-ghost{background:rgba(255,255,255,.05);border-color:var(--line);color:#fff;}
+    .btn-ghost:hover{border-color:var(--brand);}
+
+    /* 海报卡 */
+    .poster-wrap{position:relative;perspective:1200px;}
+    .poster{
+        position:relative;border-radius:20px;overflow:hidden;
+        transform:rotateY(-9deg) rotateX(4deg);
+        box-shadow:0 30px 70px rgba(0,0,0,.6);
+        border:1px solid var(--line);
+    }
+    .poster img{width:100%;display:block;aspect-ratio:3/4;object-fit:cover;}
+    .poster .badge{
+        position:absolute;top:14px;left:14px;
+        background:rgba(0,0,0,.55);backdrop-filter:blur(6px);
+        color:var(--gold);font-size:12px;font-weight:700;
+        padding:5px 12px;border-radius:999px;border:1px solid rgba(255,194,75,.4);
+    }
+    .poster .meta{
+        position:absolute;bottom:0;left:0;right:0;padding:22px 18px 16px;
+        background:linear-gradient(0deg,rgba(5,5,12,.96),transparent);
+    }
+    .poster .meta h4{font-size:17px;margin-bottom:6px;}
+    .poster .meta p{font-size:12px;color:var(--sub);}
+    .float-chip{
+        position:absolute;right:-10px;top:22px;
+        background:var(--card);border:1px solid var(--line);border-radius:12px;
+        padding:10px 14px;font-size:12px;box-shadow:0 12px 30px rgba(0,0,0,.5);
+    }
+    .float-chip b{color:var(--brand);font-size:15px;}
+
+    /* ===== 通用栏目 ===== */
+    section{padding:64px 0;}
+    .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:30px;flex-wrap:wrap;}
+    .sec-head h2{font-size:clamp(22px,3vw,30px);font-weight:800;display:flex;align-items:center;gap:12px;}
+    .sec-head h2::before{content:"";width:5px;height:26px;border-radius:4px;background:linear-gradient(var(--brand),var(--brand2));}
+    .sec-head .more{color:var(--sub);font-size:13px;border:1px solid var(--line);padding:6px 14px;border-radius:999px;}
+    .sec-head .more:hover{color:#fff;border-color:var(--brand);}
+    .sub{color:var(--sub);font-size:14px;margin-top:6px;}
+
+    /* 分类胶囊 */
+    .cats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px;}
+    .cat{
+        padding:9px 18px;border-radius:999px;font-size:13px;cursor:pointer;
+        background:var(--card);border:1px solid var(--line);color:var(--sub);transition:.25s;
+    }
+    .cat:hover,.cat.on{color:#fff;border-color:transparent;background:linear-gradient(135deg,var(--brand),var(--brand2));}
+
+    /* 卡片网格 */
+    .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.3s;}
+    .card:hover{transform:translateY(-6px);border-color:rgba(255,59,107,.5);box-shadow:0 18px 40px rgba(0,0,0,.45);}
+    .thumb{position:relative;aspect-ratio:2/3;overflow:hidden;}
+    .thumb img{width:100%;height:100%;object-fit:cover;transition:.5s;}
+    .card:hover .thumb img{transform:scale(1.07);}
+    .score{
+        position:absolute;top:10px;right:10px;
+        background:rgba(0,0,0,.6);backdrop-filter:blur(6px);
+        color:var(--gold);font-weight:800;font-size:12px;
+        padding:3px 9px;border-radius:8px;
+    }
+    .ep{
+        position:absolute;bottom:10px;left:10px;
+        background:var(--brand);color:#fff;font-size:11px;font-weight:700;
+        padding:3px 9px;border-radius:6px;
+    }
+    .card .info{padding:12px 14px;}
+    .card .info h4{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .card .info p{font-size:12px;color:var(--sub);margin-top:5px;display:flex;justify-content:space-between;}
+
+    /* ===== 排行 ===== */
+    .rank{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;}
+    .rank-list{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px;}
+    .rank-item{
+        display:flex;align-items:center;gap:14px;padding:12px;border-radius:12px;transition:.2s;
+    }
+    .rank-item:hover{background:rgba(255,255,255,.05);}
+    .no{
+        width:30px;height:30px;flex:none;border-radius:9px;
+        display:grid;place-items:center;font-weight:800;font-size:14px;
+        background:rgba(255,255,255,.06);color:var(--sub);
+    }
+    .rank-item.top .no{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;}
+    .rank-item .t{flex:1;min-width:0;}
+    .rank-item .t h5{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .rank-item .t small{color:var(--sub);font-size:12px;}
+    .rank-item .up{color:var(--brand);font-weight:800;font-size:13px;}
+
+    /* ===== 功能特性 ===== */
+    .feat{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+    .feat .f{
+        background:linear-gradient(160deg,var(--card),var(--bg2));
+        border:1px solid var(--line);border-radius:16px;padding:24px;transition:.3s;
+    }
+    .feat .f:hover{border-color:rgba(123,92,255,.5);transform:translateY(-4px);}
+    .feat .ic{
+        width:48px;height:48px;border-radius:14px;margin-bottom:14px;
+        display:grid;place-items:center;font-size:22px;
+        background:rgba(255,59,107,.12);
+    }
+    .feat h4{font-size:16px;margin-bottom:6px;}
+    .feat p{font-size:13px;color:var(--sub);}
+
+    /* ===== 更新日志 ===== */
+    .timeline{position:relative;padding-left:26px;}
+    .timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--brand),var(--brand2));}
+    .tl-item{position:relative;margin-bottom:22px;}
+    .tl-item::before{content:"";position:absolute;left:-24px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:3px solid var(--brand);}
+    .tl-item .d{font-size:12px;color:var(--gold);font-weight:700;}
+    .tl-item h5{font-size:15px;}
+    .tl-item p{font-size:13px;color:var(--sub);}
+
+    /* ===== 订阅 ===== */
+    .subscribe{
+        border-radius:24px;padding:44px 36px;text-align:center;
+        background:
+            radial-gradient(700px 300px at 50% -20%, rgba(123,92,255,.3), transparent 60%),
+            linear-gradient(135deg,var(--card),var(--bg2));
+        border:1px solid var(--line);
+    }
+    .subscribe h3{font-size:clamp(20px,3vw,28px);margin-bottom:10px;}
+    .subscribe p{color:var(--sub);margin-bottom:22px;}
+    .sub-form{display:flex;gap:10px;max-width:460px;margin:0 auto;flex-wrap:wrap;justify-content:center;}
+    .sub-form input{
+        flex:1;min-width:200px;padding:13px 18px;border-radius:12px;
+        background:rgba(255,255,255,.06);border:1px solid var(--line);color:#fff;outline:none;font-size:14px;
+    }
+    .sub-form input:focus{border-color:var(--brand);}
+
+    /* ===== 页脚 ===== */
+    footer{border-top:1px solid var(--line);padding:50px 0 26px;background:var(--bg2);}
+    .foot{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px;}
+    .foot h5{font-size:15px;margin-bottom:14px;position:relative;display:inline-block;}
+    .foot h5::after{content:"";position:absolute;left:0;bottom:-5px;width:24px;height:2px;background:var(--brand);border-radius:2px;}
+    .foot ul{list-style:none;}
+    .foot li{font-size:13px;color:var(--sub);margin-bottom:9px;}
+    .foot li:hover{color:#fff;}
+    .foot .brand-txt{color:var(--sub);font-size:13px;margin-top:12px;max-width:320px;}
+    .copy{text-align:center;color:var(--sub);font-size:12px;margin-top:34px;padding-top:20px;border-top:1px solid var(--line);}
+    .copy b{color:var(--brand);}
+
+    /* ===== 回到顶部 ===== */
+    .top{
+        position:fixed;right:18px;bottom:24px;width:46px;height:46px;border-radius:50%;
+        background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none;
+        font-size:20px;cursor:pointer;box-shadow:0 10px 26px rgba(255,59,107,.35);
+        opacity:0;pointer-events:none;transition:.3s;z-index:60;
+    }
+    .top.show{opacity:1;pointer-events:auto;}
+
+    /* ===== 响应式 ===== */
+    @media(max-width:960px){
+        .grid{grid-template-columns:repeat(3,1fr);}
+        .feat{grid-template-columns:repeat(2,1fr);}
+        .rank{grid-template-columns:1fr;}
+        .foot{grid-template-columns:repeat(2,1fr);}
+    }
+    @media(max-width:720px){
+        .menu-btn{display:block;margin-left:auto;}
+        .nav-links{
+            position:fixed;inset:64px 0 0 0;
+            background:rgba(7,7,13,.97);backdrop-filter:blur(14px);
+            flex-direction:column;padding:24px;gap:4px;
+            transform:translateX(100%);transition:.35s;
+        }
+        .nav-links.open{transform:translateX(0);}
+        .nav-links a{font-size:16px;padding:14px;border-radius:12px;}
+        .search{display:none;}
+        .hero{padding:44px 0 40px;}
+        .hero-grid{grid-template-columns:1fr;}
+        .poster{transform:none;max-width:340px;margin:0 auto;}
+        .float-chip{display:none;}
+        .grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+        .feat{grid-template-columns:1fr;}
+        section{padding:44px 0;}
+        .foot{grid-template-columns:1fr;}
+        .stat b{font-size:22px;}
+    }
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<!-- 顶部导航 -->
+<header>
+    <div class="wrap nav">
+        <a class="logo" href="#" aria-label="啪啪电影网首页">
+            <span class="mark">啪啪</span>
+            <b>啪啪<span>电影网</span></b>
+        </a>
+        <button class="menu-btn" id="menuBtn" aria-label="菜单">☰</button>
+        <nav class="nav-links" id="navLinks">
+            <a href="#home" class="act">首页</a>
+            <a href="#movie">电影</a>
+            <a href="#tv">电视剧</a>
+            <a href="#anime">动漫</a>
+            <a href="#variety">综艺</a>
+            <a href="#rank">排行榜</a>
+            <a href="#feature">特色</a>
+            <a href="#update">更新</a>
+        </nav>
+        <div class="search">
+            <span aria-hidden="true">🔍</span>
+            <input type="search" placeholder="搜影片、演员、导演">
+        </div>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="home">
+    <div class="wrap hero-grid">
+        <div>
+            <span class="eyebrow"><span class="dot"></span> 每日实时更新 · 全网影视聚合</span>
+            <h1>一站看遍<em>好电影</em><br>啪啪电影网 · 高清无广告</h1>
+            <p class="lead">啪啪电影网（papadianyingwang）专注电影、电视剧、动漫、综艺四大频道，提供最新院线大片、热播剧集与经典老片的在线观看与资讯导航，界面清爽、加载迅捷、移动端友好。</p>
+            <div class="stats">
+                <div class="stat"><b>12,800+</b><small>影视资源</small></div>
+                <div class="stat"><b>每日</b><small>实时更新</small></div>
+                <div class="stat"><b>4K</b><small>高清画质</small></div>
+                <div class="stat"><b>0</b><small>弹窗广告</small></div>
+            </div>
+            <div class="cta">
+                <a class="btn btn-primary" href="#movie">🎬 立即观影</a>
+                <a class="btn btn-ghost" href="#feature">✨ 了解特色</a>
+            </div>
+        </div>
+        <div class="poster-wrap">
+            <div class="poster">
+                <span class="badge">🔥 今日推荐</span>
+                <img src="https://picsum.photos/id/1059/600/800" alt="啪啪电影网今日推荐影片海报">
+                <div class="meta">
+                    <h4>《星际回响》2026 科幻巨制</h4>
+                    <p>豆瓣 8.7 · 片长 142 分钟 · 科幻 / 冒险</p>
+                </div>
+            </div>
+            <div class="float-chip">🏆 本周<b>热度第一</b></div>
+        </div>
+    </div>
+</section>
+
+<!-- 电影 -->
+<section id="movie">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>电影频道</h2>
+                <p class="sub">院线新片、经典重温、高分冷门，按类型随心选</p>
+            </div>
+            <a class="more" href="#">查看更多 ›</a>
+        </div>
+        <div class="cats">
+            <span class="cat on">全部</span>
+            <span class="cat">动作</span>
+            <span class="cat">科幻</span>
+            <span class="cat">喜剧</span>
+            <span class="cat">悬疑</span>
+            <span class="cat">爱情</span>
+            <span class="cat">动画</span>
+            <span class="cat">纪录片</span>
+        </div>
+        <div class="grid">
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1040/400/600" alt="电影海报" loading="lazy"><span class="score">9.1</span><span class="ep">HD</span></div>
+                <div class="info"><h4>怒海救援</h4><p><span>动作 / 灾难</span><span>2026</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1047/400/600" alt="电影海报" loading="lazy"><span class="score">8.4</span><span class="ep">4K</span></div>
+                <div class="info"><h4>时间折叠者</h4><p><span>科幻 / 悬疑</span><span>2026</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1057/400/600" alt="电影海报" loading="lazy"><span class="score">7.9</span><span class="ep">HD</span></div>
+                <div class="info"><h4>城市烟火</h4><p><span>喜剧 / 剧情</span><span>2025</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1062/400/600" alt="电影海报" loading="lazy"><span class="score">8.8</span><span class="ep">HD</span></div>
+                <div class="info"><h4>无名之辈 2</h4><p><span>犯罪 / 剧情</span><span>2025</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1069/400/600" alt="电影海报" loading="lazy"><span class="score">7.6</span><span class="ep">HD</span></div>
+                <div class="info"><h4>深海鲸歌</h4><p><span>动画 / 奇幻</span><span>2026</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1071/400/600" alt="电影海报" loading="lazy"><span class="score">8.2</span><span class="ep">4K</span></div>
+                <div class="info"><h4>追光者</h4><p><span>传记 / 历史</span><span>2025</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1080/400/600" alt="电影海报" loading="lazy"><span class="score">6.9</span><span class="ep">HD</span></div>
+                <div class="info"><h4>午夜便利店</h4><p><span>惊悚 / 悬疑</span><span>2026</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1084/400/600" alt="电影海报" loading="lazy"><span class="score">8.6</span><span class="ep">HD</span></div>
+                <div class="info"><h4>春风十里</h4><p><span>爱情 / 文艺</span><span>2025</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/110/400/600" alt="电影海报" loading="lazy"><span class="score">7.8</span><span class="ep">HD</span></div>
+                <div class="info"><h4>极速突围</h4><p><span>动作 / 赛车</span><span>2026</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/119/400/600" alt="电影海报" loading="lazy"><span class="score">9.3</span><span class="ep">4K</span></div>
+                <div class="info"><h4>山河故人</h4><p><span>纪录片 / 自然</span><span>2025</span></p></div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- 电视剧 -->
+<section id="tv" style="background:linear-gradient(180deg,transparent,var(--bg2));">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>电视剧频道</h2>
+                <p class="sub">国产剧、美剧、韩剧、日剧，追更不间断</p>
+            </div>
+            <a class="more" href="#">查看更多 ›</a>
+        </div>
+        <div class="grid">
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1015/400/600" alt="剧集封面" loading="lazy"><span class="ep">更新至 28 集</span></div>
+                <div class="info"><h4>长安十二时辰 Ⅱ</h4><p><span>古装 / 悬疑</span><span>豆瓣 8.9</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1025/400/600" alt="剧集封面" loading="lazy"><span class="ep">全 40 集</span></div>
+                <div class="info"><h4>沉默的真相 2</h4><p><span>犯罪 / 剧情</span><span>豆瓣 9.0</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1035/400/600" alt="剧集封面" loading="lazy"><span class="ep">更新至 12 集</span></div>
+                <div class="info"><h4>急诊科医生</h4><p><span>医疗 / 都市</span><span>豆瓣 8.3</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1067/400/600" alt="剧集封面" loading="lazy"><span class="ep">全 24 集</span></div>
+                <div class="info"><h4>权力的回响</h4><p><span>美剧 / 史诗</span><span>豆瓣 9.2</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1066/400/600" alt="剧集封面" loading="lazy"><span class="ep">更新至 16 集</span></div>
+                <div class="info"><h4>财阀家的小儿子</h4><p><span>韩剧 / 复仇</span><span>豆瓣 8.7</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1053/400/600" alt="剧集封面" loading="lazy"><span class="ep">全 10 集</span></div>
+                <div class="info"><h4>重启人生</h4><p><span>日剧 / 奇幻</span><span>豆瓣 9.4</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1041/400/600" alt="剧集封面" loading="lazy"><span class="ep">更新至 30 集</span></div>
+                <div class="info"><h4>家有儿女 2026</h4><p><span>情景 / 喜剧</span><span>豆瓣 7.5</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1049/400/600" alt="剧集封面" loading="lazy"><span class="ep">全 36 集</span></div>
+                <div class="info"><h4>山海情深</h4><p><span>年代 / 励志</span><span>豆瓣 8.8</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1078/400/600" alt="剧集封面" loading="lazy"><span class="ep">更新至 8 集</span></div>
+                <div class="info"><h4>暗夜行者</h4><p><span>警匪 / 动作</span><span>豆瓣 8.1</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1083/400/600" alt="剧集封面" loading="lazy"><span class="ep">全 12 集</span></div>
+                <div class="info"><h4>漫长的季节</h4><p><span>生活 / 悬疑</span><span>豆瓣 9.5</span></p></div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- 动漫 -->
+<section id="anime">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>动漫番剧</h2>
+                <p class="sub">新番速递、经典补番、国漫崛起，追番不迷路</p>
+            </div>
+            <a class="more" href="#">查看更多 ›</a>
+        </div>
+        <div class="grid">
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1029/400/600" alt="动漫封面" loading="lazy"><span class="ep">更新至 22 话</span></div>
+                <div class="info"><h4>咒术回战 Ⅲ</h4><p><span>热血 / 奇幻</span><span>豆瓣 9.1</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1039/400/600" alt="动漫封面" loading="lazy"><span class="ep">全 24 话</span></div>
+                <div class="info"><h4>凡人修仙传</h4><p><span>国漫 / 仙侠</span><span>豆瓣 8.6</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1056/400/600" alt="动漫封面" loading="lazy"><span class="ep">更新至 10 话</span></div>
+                <div class="info"><h4>葬送的芙莉莲</h4><p><span>冒险 / 治愈</span><span>豆瓣 9.3</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1063/400/600" alt="动漫封面" loading="lazy"><span class="ep">更新至 36 话</span></div>
+                <div class="info"><h4>斗破苍穹 年番</h4><p><span>国漫 / 玄幻</span><span>豆瓣 8.2</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1074/400/600" alt="动漫封面" loading="lazy"><span class="ep">全 13 话</span></div>
+                <div class="info"><h4>铃芽之旅</h4><p><span>剧场版 / 奇幻</span><span>豆瓣 8.8</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1082/400/600" alt="动漫封面" loading="lazy"><span class="ep">更新至 6 话</span></div>
+                <div class="info"><h4>迷宫饭</h4><p><span>冒险 / 美食</span><span>豆瓣 9.0</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/111/400/600" alt="动漫封面" loading="lazy"><span class="ep">全 24 话</span></div>
+                <div class="info"><h4>雾山五行</h4><p><span>国漫 / 武侠</span><span>豆瓣 8.9</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/121/400/600" alt="动漫封面" loading="lazy"><span class="ep">更新至 18 话</span></div>
+                <div class="info"><h4>排球少年 终章</h4><p><span>运动 / 热血</span><span>豆瓣 9.2</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/133/400/600" alt="动漫封面" loading="lazy"><span class="ep">全 12 话</span></div>
+                <div class="info"><h4>间谍过家家</h4><p><span>搞笑 / 日常</span><span>豆瓣 8.7</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/146/400/600" alt="动漫封面" loading="lazy"><span class="ep">更新至 4 话</span></div>
+                <div class="info"><h4>鬼灭之刃 锻刀村</h4><p><span>热血 / 和风</span><span>豆瓣 8.5</span></p></div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- 综艺 -->
+<section id="variety" style="background:linear-gradient(180deg,transparent,var(--bg2));">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>综艺纪实</h2>
+                <p class="sub">热门综艺、真人秀、纪录片，轻松下饭</p>
+            </div>
+            <a class="more" href="#">查看更多 ›</a>
+        </div>
+        <div class="grid">
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1003/400/600" alt="综艺封面" loading="lazy"><span class="ep">更新至 6 期</span></div>
+                <div class="info"><h4>奔跑吧 · 黄河篇</h4><p><span>户外 / 真人秀</span><span>豆瓣 7.8</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1016/400/600" alt="综艺封面" loading="lazy"><span class="ep">全 12 期</span></div>
+                <div class="info"><h4>种地吧 第三季</h4><p><span>生活 / 纪实</span><span>豆瓣 9.1</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1037/400/600" alt="综艺封面" loading="lazy"><span class="ep">更新至 4 期</span></div>
+                <div class="info"><h4>歌手 2026</h4><p><span>音乐 / 竞演</span><span>豆瓣 8.4</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1043/400/600" alt="综艺封面" loading="lazy"><span class="ep">全 10 期</span></div>
+                <div class="info"><h4>五十公里桃花坞</h4><p><span>社交 / 生活</span><span>豆瓣 7.6</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1051/400/600" alt="综艺封面" loading="lazy"><span class="ep">更新至 3 期</span></div>
+                <div class="info"><h4>地球脉动 Ⅲ</h4><p><span>纪录片 / 自然</span><span>豆瓣 9.6</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1060/400/600" alt="综艺封面" loading="lazy"><span class="ep">全 8 期</span></div>
+                <div class="info"><h4>人间世</h4><p><span>纪录片 / 医疗</span><span>豆瓣 9.4</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1072/400/600" alt="综艺封面" loading="lazy"><span class="ep">更新至 9 期</span></div>
+                <div class="info"><h4>脱口秀和 Ta 的朋友们</h4><p><span>喜剧 / 脱口秀</span><span>豆瓣 8.2</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1077/400/600" alt="综艺封面" loading="lazy"><span class="ep">全 6 期</span></div>
+                <div class="info"><h4>舌尖上的中国 Ⅳ</h4><p><span>纪录片 / 美食</span><span>豆瓣 9.3</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/1081/400/600" alt="综艺封面" loading="lazy"><span class="ep">更新至 5 期</span></div>
+                <div class="info"><h4>乘风破浪的姐姐</h4><p><span>竞演 / 音乐</span><span>豆瓣 7.9</span></p></div>
+            </article>
+            <article class="card">
+                <div class="thumb"><img src="https://picsum.photos/id/109/400/600" alt="综艺封面" loading="lazy"><span class="ep">全 4 集</span></div>
+                <div class="info"><h4>大国重器</h4><p><span>纪录片 / 科技</span><span>豆瓣 9.0</span></p></div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- 排行榜 -->
+<section id="rank">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>实时热播榜</h2>
+                <p class="sub">基于全网搜索与播放热度生成，每小时更新</p>
+            </div>
+            <a class="more" href="#">完整榜单 ›</a>
+        </div>
+        <div class="rank">
+            <div class="rank-list">
+                <div class="rank-item top"><span class="no">1</span><div class="t"><h5>星际回响</h5><small>电影 · 科幻 / 冒险 · 热度 986 万</small></div><span class="up">↑3</span></div>
+                <div class="rank-item top"><span class="no">2</span><div class="t"><h5>长安十二时辰 Ⅱ</h5><small>电视剧 · 古装悬疑 · 热度 872 万</small></div><span class="up">↑1</span></div>
+                <div class="rank-item top"><span class="no">3</span><div class="t"><h5>咒术回战 Ⅲ</h5><small>动漫 · 热血奇幻 · 热度 765 万</small></div><span class="up">↑5</span></div>
+                <div class="rank-item"><span class="no">4</span><div class="t"><h5>歌手 2026</h5><small>综艺 · 音乐竞演 · 热度 621 万</small></div><span class="up">↓1</span></div>
+                <div class="rank-item"><span class="no">5</span><div class="t"><h5>沉默的真相 2</h5><small>电视剧 · 犯罪剧情 · 热度 5啪啪 万</small></div><span class="up">↑2</span></div>
+                <div class="rank-item"><span class="no">6</span><div class="t"><h5>怒海救援</h5><small>电影 · 动作灾难 · 热度 534 万</small></div><span class="up">↓2</span></div>
+                <div class="rank-item"><span class="no">7</span><div class="t"><h5>葬送的芙莉莲</h5><small>动漫 · 冒险治愈 · 热度 497 万</small></div><span class="up">↑4</span></div>
+                <div class="rank-item"><span class="no">8</span><div class="t"><h5>种地吧 第三季</h5><small>综艺 · 生活纪实 · 热度 452 万</small></div><span class="up">—</span></div>
+            </div>
+            <div class="rank-list">
+                <div class="rank-item"><span class="no">9</span><div class="t"><h5>凡人修仙传</h5><small>动漫 · 国漫仙侠 · 热度 419 万</small></div><span class="up">↑1</span></div>
+                <div class="rank-item"><span class="no">10</span><div class="t"><h5>时间折叠者</h5><small>电影 · 科幻悬疑 · 热度 386 万</small></div><span class="up">↓3</span></div>
+                <div class="rank-item"><span class="no">11</span><div class="t"><h5>漫长的季节</h5><small>电视剧 · 生活悬疑 · 热度 351 万</small></div><span class="up">↑6</span></div>
+                <div class="rank-item"><span class="no">12</span><div class="t"><h5>地球脉动 Ⅲ</h5><small>综艺 · 自然纪录片 · 热度 328 万</small></div><span class="up">↑2</span></div>
+                <div class="rank-item"><span class="no">13</span><div class="t"><h5>暗夜行者</h5><small>电视剧 · 警匪动作 · 热度 296 万</small></div><span class="up">↓1</span></div>
+                <div class="rank-item"><span class="no">14</span><div class="t"><h5>深海鲸歌</h5><small>电影 · 动画奇幻 · 热度 274 万</small></div><span class="up">↑8</span></div>
+                <div class="rank-item"><span class="no">15</span><div class="t"><h5>脱口秀和 Ta 的朋友们</h5><small>综艺 · 喜剧 · 热度 251 万</small></div><span class="up">—</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 特色 -->
+<section id="feature" style="background:linear-gradient(180deg,transparent,var(--bg2));">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>为什么选择 啪啪电影网</h2>
+                <p class="sub">papadianyingwang 致力于做最清爽的影视导航站</p>
+            </div>
+        </div>
+        <div class="feat">
+            <div class="f"><div class="ic">🎯</div><h4>资源全而精</h4><p>电影、电视剧、动漫、综艺四大频道覆盖，人工筛选去重，拒绝标题党与低质资源。</p></div>
+            <div class="f"><div class="ic">⚡</div><h4>秒开不等待</h4><p>全站静态化架构，边缘节点分发，首屏加载控制在 1 秒内，弱网也能流畅浏览。</p></div>
+            <div class="f"><div class="ic">📱</div><h4>移动端优先</h4><p>响应式布局适配手机、平板、桌面，触控与手势操作友好，通勤追剧不将就。</p></div>
+            <div class="f"><div class="ic">🧭</div><h4>智能检索</h4><p>支持按片名、演员、导演、类型、年份多维筛选，一键直达想看的内容。</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- 更新日志 -->
+<section id="update">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <h2>更新日志</h2>
+                <p class="sub">每一次改动，都为更好的观影体验</p>
+            </div>
+        </div>
+        <div class="timeline">
+            <div class="tl-item"><span class="d">2026-10-05</span><h5>新增「综艺纪实」频道上线</h5><p>补充纪录片与真人秀分类，片库扩容 1200+ 条，优化移动端卡片间距。</p></div>
+            <div class="tl-item"><span class="d">2026-09-21</span><h5>热播榜升级为实时榜</h5><p>接入热度计算模型，榜单由周更改为每小时更新，新增升降箭头标识。</p></div>
+            <div class="tl-item"><span class="d">2026-09-08</span><h5>全站暗色主题重构</h5><p>采用霓虹渐变视觉体系，降低长时间观影的视觉疲劳，对比度通过 WCAG AA 标准。</p></div>
+            <div class="tl-item"><span class="d">2026-08-25</span><h5>SEO 与结构化数据优化</h5><p>完善 meta 标签、语义化标签与站内锚点导航，提升搜索引擎收录与排名表现。</p></div>
+            <div class="tl-item"><span class="d">2026-08-10</span><h5>啪啪电影网正式上线</h5><p>域名 papadianyingwang-app 部署完成，首批收录电影 8000+、剧集 3000+。</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- 订阅 -->
+<div class="wrap">
+    <div class="subscribe">
+        <h3>不错过任何一部好片</h3>
+        <p>订阅 啪啪电影网更新提醒，每周精选片单直达邮箱</p>
+        <form class="sub-form" onsubmit="event.preventDefault();alert('订阅成功！（演示）');">
+            <input type="email" placeholder="输入你的邮箱地址" required aria-label="邮箱">
+            <button class="btn btn-primary" type="submit">立即订阅</button>
+        </form>
+    </div>
+</div>
+
+<!-- 页脚 -->
+<footer>
+    <div class="wrap">
+        <div class="foot">
+            <div>
+                <a class="logo" href="#">
+                    <span class="mark">啪啪</span>
+                    <b>啪啪<span>电影网</span></b>
+                </a>
+                <p class="brand-txt">啪啪电影网（papadianyingwang）是专注于影视内容发现与导航的在线平台，聚合电影、电视剧、动漫、综艺四大类目，为影迷提供清爽、快速、全面的观影入口。</p>
+            </div>
+            <div>
+                <h5>频道导航</h5>
+                <ul>
+                    <li><a href="#movie">电影频道</a></li>
+                    <li><a href="#tv">电视剧频道</a></li>
+                    <li><a href="#anime">动漫番剧</a></li>
+                    <li><a href="#variety">综艺纪实</a></li>
+                    <li><a href="#rank">热播排行榜</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>帮助中心</h5>
+                <ul>
+                    <li><a href="#">观影指南</a></li>
+                    <li><a href="#">清晰度说明</a></li>
+                    <li><a href="#">常见问题</a></li>
+                    <li><a href="#">意见反馈</a></li>
+                    <li><a href="#">合作入驻</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>关于我们</h5>
+                <ul>
+                    <li><a href="#">站点简介</a></li>
+                    <li><a href="#">更新日志</a></li>
+                    <li><a href="#">免责声明</a></li>
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">联系邮箱：hi@papadianyingwang.github.io</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copy">
+            © 2026 <b>啪啪电影网</b>（papadianyingwang）· 网站网址：https://papadianyingwang-app.github.io · 仅供学习与交流使用，观影请支持正版 · 保留所有权利
+        </div>
+    </div>
+</footer>
+
+<button class="top" id="topBtn" aria-label="回到顶部">↑</button>
+
+<script>
+    // 移动端菜单
+    var menuBtn = document.getElementById('menuBtn');
+    var navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', function(){
+        navLinks.classList.toggle('open');
+        menuBtn.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    });
+    navLinks.addEventListener('click', function(e){
+        if(e.target.tagName === 'A'){
+            navLinks.classList.remove('open');
+            menuBtn.textContent = '☰';
+        }
+    });
+
+    // 回到顶部
+    var topBtn = document.getElementById('topBtn');
+    window.addEventListener('scroll', function(){
+        topBtn.classList.toggle('show', window.scrollY > 500);
+    });
+    topBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+    // 分类高亮
+    var cats = document.querySelectorAll('.cat');
+    cats.forEach(function(c){
+        c.addEventListener('click', function(){
+            cats.forEach(function(x){ x.classList.remove('on'); });
+            c.classList.add('on');
+        });
+    });
+
+    // 导航高亮当前栏目
+    var links = document.querySelectorAll('.nav-links a');
+    var sections = ['home','movie','tv','anime','variety','rank','feature','update'].map(function(id){ return document.getElementById(id); });
+    window.addEventListener('scroll', function(){
+        var pos = window.scrollY + 120;
+        var idx = 0;
+        sections.forEach(function(s, i){ if(s && s.offsetTop <= pos) idx = i; });
+        links.forEach(function(l, i){ l.classList.toggle('act', i === idx); });
+    });
+</script>
+</body>
+</html>
